@@ -1,0 +1,62 @@
+body {
+    background-image: url("https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/background.jpg");
+    background-position: center;
+    background-size: cover;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    /* 요소들이 공간을 나눠씀*/
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weather {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.container {
+    display: flex;
+    /* flex-direction 세로로 쌓이도록 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.footer {
+    /* 위치고정 */
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+
+    font-weight: bold;
+    padding: 20px 0;
+}
+
+.greeting {
+    margin-bottom: 50px;
+}
+
+.motto {
+    margin-bottom: 100px;
+}
+
+.log {
+    margin-left: 30px;
+    height: 32px;
+}
+
+/* 구글폰트 사용하기위해 import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
+/* *{} -> 모든 요소에 아래 폰트 적용한다 */
+* {
+    font-family: 'Roboto Mono', monospace;
+}
