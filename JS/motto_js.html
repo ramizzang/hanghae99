@@ -61,6 +61,7 @@
             margin-left: 30px;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -88,8 +89,8 @@
     </div>
 
     <div class="footer">
-        <p>- 작자 미상 -</p>
-        <p>멋진 명언입니다. 아이스크림을 먹으면 행복해져요.</p>
+        <p id="quoteAuthor">- 작자 미상 -</p>
+        <p id="quoteContent">멋진 명언입니다. 아이스크림을 먹으면 행복해져요.</p>
     </div>
 
     <script>
@@ -123,6 +124,32 @@
 
         // 페이지 로드 시에도 초기에 한 번 호출
         displayCurrentTime();
+
+        let url = "https://api.quotable.io/random";
+        fetch(url).then(res => res.json()).then(data => {
+            console.log(data);
+            let author = data['author']
+            let content = data['content']
+
+            let atuhorMsg = `- ${author} -`
+            let contentMsg = `" ${content} "`
+
+            $('#quoteAuthor').text(atuhorMsg)
+            $('#quoteContent').text(contentMsg)
+        })
+
+        //날씨 api 에서 아이콘과 온도정보 실시간으로 받아오기 추가
+        let weather_url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+        fetch(weather_url)
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                let iconUrl = data['icon']
+                let temp = data['temp']
+                let message = `${temp}ºC`
+                $('.weather img').attr('src', iconUrl);
+                $('.weather p').text(message);
+            })
     </script>
 </body>
 
