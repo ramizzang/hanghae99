@@ -66,10 +66,13 @@ def answer():
     # if not query:
     #     query = '20230601'
 
-    if request.args.get('query'):
-        query = request.args.get('query')
-    else:
-        query = '20230601'
+    # if request.args.get('query'):
+    #     query = request.args.get('query')
+    # else:
+    #     query = '20230601'
+    
+    # get 메서드에의 두번째 매개변수로 기본값 설정을 할 수도 있다.
+    query = request.args.get('query','20230601')
 
     URL = f"http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt={
         query}"
@@ -77,7 +80,7 @@ def answer():
     res = requests.get(URL)
 
     rjson = res.json()
-    
+
     serch_list = rjson['boxOfficeResult']['weeklyBoxOfficeList']
 
     return render_template("answer.html", data=serch_list)
