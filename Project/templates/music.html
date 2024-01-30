@@ -20,42 +20,23 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+
+
+        .card-title {
+            white-space: nowrap;
+            /* 줄 바꿈 방지 */
+            overflow: hidden;
+            /* 넘치는 부분 감추기 */
+            text-overflow: ellipsis;
+            /* 말줄임 표시 (...) */
+        }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body data-bs-theme="dark">
     <div class="background-banner">
-        <nav class="navbar border-bottom border-bottom-dark d-flex justify-content-space-between" data-bs-theme="dark">
-            <div class="ms-3">
-                <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/images/sparta-logo.svg"
-                    alt="">
-            </div>
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-white" aria-current="page" href="{{ url_for('home') }}">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ url_for('music') }}">Music</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Album</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white">Movie</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </nav>
+        {% include 'navbar.html' %}
 
         <div class="px-4 py-5 my-5 text-center">
             <h1 class="display-5 fw-bold text-body-emphasis">멜로디 쉐어</h1>
@@ -87,25 +68,25 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action=" {{url_for('music_create')}}" method="get">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">유저</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
+                                    aria-describedby="emailHelp" name="username">
                                 <div id="emailHelp" class="form-text">사용자(추천인)의 이름을 넣어주세요.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">노래 제목</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1">
+                                <input type="text" class="form-control" id="exampleInputPassword1" name="title">
                                 <div id="emailHelp" class="form-text">좋아하는 노래 제목을 넣어주세요.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">가수</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1">
+                                <input type="text" class="form-control" id="exampleInputPassword1" name="artist">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">앨범 커버URL</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1">
+                                <input type="text" class="form-control" id="exampleInputPassword1" name="image">
                             </div>
                             <button type="submit" class="btn btn-danger">Submit</button>
                         </form>
@@ -115,50 +96,24 @@
         </div>
 
         <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-75 pb-5">
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/ive.jpg"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Love Dive</h5>
-                        <p class="card-text">아이브(IVE)</p>
-                        <p class="card-text">추천 by 최지웅</p>
+            {% for song in data %}
+            <form action="{{ url_for('delete_song')}}" method="post">
+                <input type="hidden" name="song_id" value="{{ song.id }}">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ song.image_url }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title" name="title"> {{ song.title }} </h5>
+                            <p class="card-text"> {{ song.artist }} </p>
+                            <p class="card-text">{{ song.username }} </p>
+                            <button type="submit" class="btn btn-light w-100">삭제</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/ive.jpg"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Love Dive</h5>
-                        <p class="card-text">아이브(IVE)</p>
-                        <p class="card-text">추천 by 최지웅</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/ive.jpg"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Love Dive</h5>
-                        <p class="card-text">아이브(IVE)</p>
-                        <p class="card-text">추천 by 최지웅</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/webjong/ive.jpg"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Love Dive</h5>
-                        <p class="card-text">아이브(IVE)</p>
-                        <p class="card-text">추천 by 최지웅</p>
-                    </div>
-                </div>
-            </div>
+            </form>
+            {% endfor %}
+
+
         </div>
     </div>
 
